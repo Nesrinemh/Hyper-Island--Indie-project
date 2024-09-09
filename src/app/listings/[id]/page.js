@@ -1,6 +1,4 @@
 import { getListing } from '@/utils/getListings';
-
-import { Radio, RadioGroup } from '@headlessui/react';
 import { StarIcon } from 'lucide-react';
 
 const product = {

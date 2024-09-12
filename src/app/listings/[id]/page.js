@@ -1,225 +1,234 @@
-import { getListing } from '@/utils/getListings';
-import { StarIcon } from 'lucide-react';
+'use client';
 
-const product = {
-  name: 'Basic Tee 6-Pack',
-  price: '$192',
-  href: '#',
-  breadcrumbs: [
-    { id: 1, name: 'Men', href: '#' },
-    { id: 2, name: 'Clothing', href: '#' },
-  ],
-  images: [
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-      alt: 'Two each of gray, white, and black shirts laying flat.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-      alt: 'Model wearing plain black basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-      alt: 'Model wearing plain gray basic tee.',
-    },
-    {
-      src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-      alt: 'Model wearing plain white basic tee.',
-    },
-  ],
-  colors: [
-    {
-      name: 'White',
-      class: 'bg-white',
-      selectedClass: 'ring-gray-400',
-    },
-    {
-      name: 'Gray',
-      class: 'bg-gray-200',
-      selectedClass: 'ring-gray-400',
-    },
-    {
-      name: 'Black',
-      class: 'bg-gray-900',
-      selectedClass: 'ring-gray-900',
-    },
-  ],
-  sizes: [
-    { name: 'XXS', inStock: false },
-    { name: 'XS', inStock: true },
-    { name: 'S', inStock: true },
-    { name: 'M', inStock: true },
-    { name: 'L', inStock: true },
-    { name: 'XL', inStock: true },
-    { name: '2XL', inStock: true },
-    { name: '3XL', inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    'Hand cut and sewn locally',
-    'Dyed with our proprietary colors',
-    'Pre-washed & pre-shrunk',
-    'Ultra-soft 100% cotton',
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-};
-const reviews = { href: '#', average: 4, totalCount: 117 };
+import React, { useEffect, useState } from 'react';
+import {
+  Bath,
+  BedDouble,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  Maximize,
+  PawPrint,
+  PencilIcon,
+  StarIcon,
+  Trash2Icon,
+  Users,
+} from 'lucide-react';
+import { deleteListingById, getListing } from '@/utils/getListings';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default async function Listing({ params }) {
-  const listing = await getListing(params.id);
+export default function Listing({ params }) {
+  const [listing, setListing] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchListing() {
+      try {
+        const data = await getListing(params.id);
+        setListing(data);
+      } catch (error) {
+        console.error('Error fetching listing:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchListing();
+  }, [params.id]);
+
+  const handleDelete = async () => {
+    if (
+      window.confirm('Are you sure you want to delete this listing?')
+    ) {
+      await deleteListingById(params.id);
+      router.push('/listings');
+      router.refresh();
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!listing) {
+    return <div>Listing not found</div>;
+  }
+
+  const allImages = [listing?.cover_image, ...listing?.detail_images];
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
     <div className='bg-white'>
-      <div className='pt-6'>
-        {/* Image gallery */}
-        <div className='mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8'>
-          <div className='aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block'>
-            <img
-              alt={listing.title}
-              src={listing.detail_images[0]}
-              className='h-full w-full object-cover object-center'
-            />
-          </div>
-          <div className='hidden lg:grid lg:grid-cols-1 lg:gap-y-8'>
-            <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
+      <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24'>
+        <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2'>
+          <div className='space-y-4'>
+            <div className='relative w-full h-96 overflow-hidden rounded-lg bg-gray-200'>
               <img
-                alt={listing.title}
-                src={listing.detail_images[1]}
-                className='h-full w-full object-cover object-center'
+                src={allImages[currentImageIndex]}
+                alt={`Image ${currentImageIndex + 1} of listing`}
+                className='absolute h-full w-full object-cover object-center'
               />
+              <button
+                onClick={prevImage}
+                className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2'
+              >
+                <ChevronLeft className='h-6 w-6 text-gray-800' />
+              </button>
+              <button
+                onClick={nextImage}
+                className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2'
+              >
+                <ChevronRight className='h-6 w-6 text-gray-800' />
+              </button>
             </div>
-            <div className='aspect-h-2 aspect-w-3 overflow-hidden rounded-lg'>
-              <img
-                alt={listing.title}
-                src={listing.detail_images[2]}
-                className='h-full w-full object-cover object-center'
-              />
+            <div className='flex space-x-2 overflow-x-auto'>
+              {allImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  className={`h-20 w-20 object-cover rounded-md cursor-pointer ${
+                    index === currentImageIndex
+                      ? 'ring-2 ring-indigo-500'
+                      : ''
+                  }`}
+                  onClick={() => setCurrentImageIndex(index)}
+                />
+              ))}
             </div>
           </div>
-          <div className='aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg'>
-            <img
-              alt={listing.title}
-              src={listing.detail_images[3]}
-              className='h-full w-full object-cover object-center'
-            />
-          </div>
-        </div>
 
-        {/* Product info */}
-        <div className='mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16'>
-          <div className='lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8'>
-            <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl'>
+          {/* Image Section */}
+
+          {/* Details Section */}
+          <div>
+            <h1 className='text-2xl font-bold tracking-tight text-gray-900 mb-2'>
               {listing.title}
             </h1>
-          </div>
-
-          {/* Options */}
-          <div className='mt-4 lg:row-span-3 lg:mt-0'>
-            <h2 className='sr-only'>Product information</h2>
-            <p className='text-3xl tracking-tight text-gray-900'>
-              {listing.price}
+            <div className='flex items-center mb-4'>
+              <StarIcon className='h-5 w-5 text-yellow-400' />
+              <p className='ml-1 text-sm text-gray-500'>
+                4.5 (28 reviews)
+              </p>
+            </div>
+            <div className='flex items-center text-sm text-gray-500 mb-4'>
+              <MapPin className='h-5 w-5 mr-1' />
+              <p>
+                {listing.adress}, {listing.adress_city},{' '}
+                {listing.adress_zip_code}
+              </p>
+            </div>
+            <p className='text-3xl font-bold text-gray-900 mb-6'>
+              ${listing.price}{' '}
+              <span className='text-lg font-normal'>/ month</span>
             </p>
 
-            {/* Reviews */}
-            <div className='mt-6'>
-              <h3 className='sr-only'>Reviews</h3>
+            <div className='grid grid-cols-2 gap-4 mb-6'>
               <div className='flex items-center'>
-                <div className='flex items-center'>
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      aria-hidden='true'
-                      className={classNames(
-                        reviews.average > rating
-                          ? 'text-gray-900'
-                          : 'text-gray-200',
-                        'h-5 w-5 flex-shrink-0'
-                      )}
-                    />
-                  ))}
-                </div>
-                <p className='sr-only'>
-                  {reviews.average} out of 5 stars
-                </p>
-                <a
-                  href={reviews.href}
-                  className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'
-                >
-                  {reviews.totalCount} reviews
-                </a>
+                <BedDouble className='h-5 w-5 text-gray-400 mr-2' />
+                <span>{listing.bedrooms} Bedrooms</span>
+              </div>
+              <div className='flex items-center'>
+                <Bath className='h-5 w-5 text-gray-400 mr-2' />
+                <span>{listing.bathrooms} Bathrooms</span>
+              </div>
+              <div className='flex items-center'>
+                <Maximize className='h-5 w-5 text-gray-400 mr-2' />
+                <span>{listing.room_size} sqft</span>
+              </div>
+              <div className='flex items-center'>
+                <Users className='h-5 w-5 text-gray-400 mr-2' />
+                <span>Max {listing.maximum_tenant} tenants</span>
               </div>
             </div>
 
-            <form className='mt-10'>
-              {/* Sizes */}
-
-              <button
-                type='submit'
-                className='mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-              >
-                Contact
-              </button>
-            </form>
-          </div>
-
-          <div className='py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6'>
-            {/* Description and details */}
-            <div>
-              <h3 className='sr-only'>Description</h3>
-
-              <div className='space-y-6'>
-                <p className='text-base text-gray-900'>
-                  {listing.description}
-                </p>
-              </div>
-            </div>
-
-            <div className='mt-10'>
-              <h3 className='text-sm font-medium text-gray-900'>
-                Highlights
+            <div className='mb-6'>
+              <h3 className='text-lg font-semibold mb-2'>
+                Description
               </h3>
+              <p className='text-gray-600'>{listing.description}</p>
+            </div>
 
-              <div className='mt-4'>
-                <ul
-                  role='list'
-                  className='list-disc space-y-2 pl-4 text-sm'
-                >
-                  {product.highlights.map((highlight) => (
-                    <li key={highlight} className='text-gray-400'>
-                      <span className='text-gray-600'>
-                        {highlight}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+            <div className='mb-6'>
+              <h3 className='text-lg font-semibold mb-2'>
+                Amenities
+              </h3>
+              <div className='grid grid-cols-2 gap-2'>
+                {listing.pet_allowed && (
+                  <div className='flex items-center'>
+                    <PawPrint className='h-5 w-5 text-gray-400 mr-2' />
+                    <span>Pets allowed</span>
+                  </div>
+                )}
+                {listing.smoking_allowed && (
+                  <div className='flex items-center'>
+                    <Smoking className='h-5 w-5 text-gray-400 mr-2' />
+                    <span>Smoking allowed</span>
+                  </div>
+                )}
+                {listing.wheelchair_accessible && (
+                  <div className='flex items-center'>
+                    <Wheelchair className='h-5 w-5 text-gray-400 mr-2' />
+                    <span>Wheelchair accessible</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className='mt-10'>
-              <h2 className='text-sm font-medium text-gray-900'>
-                Contact
-              </h2>
+            <div className='mb-6'>
+              <h3 className='text-lg font-semibold mb-2'>
+                Availability
+              </h3>
+              <p>
+                Available from:{' '}
+                {new Date(listing.rental_from).toLocaleDateString()}
+              </p>
+              <p>Rental duration: {listing.rental_duration} months</p>
+            </div>
 
-              <div className='mt-4 space-y-6'>
-                <p className='text-sm text-gray-600'>
-                  {listing.contact_email}
-                </p>
-                <p className='text-sm text-gray-600'>
-                  {listing.contact_phone}
-                </p>
-                <h2 className='text-sm font-medium text-gray-900'>
-                  Published
-                </h2>
-                <p className='text-sm text-gray-600'>
-                  {listing.created_at}
-                </p>
-              </div>
+            <div className='mb-6'>
+              <h3 className='text-lg font-semibold mb-2'>
+                Contact Information
+              </h3>
+              <p>Email: {listing.contact_email}</p>
+              <p>Phone: {listing.contact_phone}</p>
+            </div>
+
+            <div className='flex flex-col justify-center m-4 '>
+              <Link
+                className='mb-2'
+                href={`/listings/${params.id}/edit`}
+              >
+                <button className='w-full flex text-lg items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transition duration-300'>
+                  <PencilIcon className='h-4 w-4 mr-2' />
+                  Edit
+                </button>
+              </Link>
+              <button
+                onClick={handleDelete}
+                className='w-full flex text-lg items-center justify-center bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transition duration-300'
+              >
+                <Trash2Icon className='h-5 w-5 mr-2' />
+                Delete
+              </button>
             </div>
           </div>
         </div>

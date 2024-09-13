@@ -4,7 +4,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className='bg-gray-800 text-white py-10'>
+    <footer className='bg-black text-white py-10 mt-auto'>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* For Tenants */}
@@ -144,13 +144,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='mt-8 pt-8 border-t border-gray-700'>
+        <div className='mt-8 pt-8 border-t border-[#F0E4BE]'>
           <p className='text-center text-sm'>
             © {new Date().getFullYear()} Living&Co All rights
-            reserved. Individial Final Project{' '}
+            reserved. Individual Final Project{' '}
             <a
               href='https://github.com/Nesrinemh'
-              className=' text-purple-200'
+              className='text-purple-200'
             >
               Nesrine H
             </a>

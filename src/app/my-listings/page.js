@@ -1,19 +1,28 @@
 import React from 'react';
-import { getListings } from '@/utils/getListings';
+import { getListingsByUserId } from '@/utils/getListings';
 import Link from 'next/link';
 import { StarIcon } from 'lucide-react';
-// Add this import
 import { unstable_noStore as noStore } from 'next/cache';
+import { createClient } from '@/utils/server';
+import { redirect } from 'next/navigation';
 
-export default async function Listings() {
+export default async function MyListing() {
   noStore();
-  const listings = await getListings();
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    redirect('/login');
+  }
+
+  const listings = await getListingsByUserId(data.user.id);
 
   return (
-    <div className='bg-white'>
+    <div className='bg-white h-screen'>
       <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24'>
         <h2 className='text-2xl font-bold tracking-tight text-gray-900 mb-6'>
-          Explore homes
+          My listings
         </h2>
 
         <div className='grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8'>

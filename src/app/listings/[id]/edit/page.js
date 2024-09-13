@@ -49,7 +49,7 @@ export default function UpdateListingForm({ params }) {
         onSubmit={handleSubmit}
         className='max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden'
       >
-        <div className='px-8 py-6 bg-[#FF67C3]'>
+        <div className='px-8 py-6 '>
           <h2 className='text-3xl font-extrabold text-white'>
             Update a New Housing Listing
           </h2>
@@ -70,7 +70,7 @@ export default function UpdateListingForm({ params }) {
               value={formData.title}
               onChange={handleChange}
               required
-              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm   '
             />
           </div>
 

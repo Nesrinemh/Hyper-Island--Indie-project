@@ -46,14 +46,10 @@ export default function Navbar({ user }) {
     }
   }
 
-  const guestNavigation = [
-    { name: 'Our Rent', href: '/our-rent' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Q&A', href: '/faq' },
-  ];
+  const guestNavigation = [{ name: 'Our Rent', href: '/' }];
 
   const authNavigation = [
-    { name: 'Rent listing', href: '/listings' },
+    { name: 'Rent listing', href: '/my-listings' },
     { name: 'Add a new rent', href: '/create-listing' },
     { name: 'Messages', href: '/messages' },
   ];
@@ -61,7 +57,7 @@ export default function Navbar({ user }) {
   const navigation = isLoggedIn ? authNavigation : guestNavigation;
 
   return (
-    <nav className='bg-white shadow'>
+    <nav className='bg-[#F0E4BE] shadow'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between h-16 md:h-24'>
           <div className='flex items-center'>

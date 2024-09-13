@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
         <>
           <Navbar user={data.user} />
         </>
-        {children}
+        <div className='h-full'>{children}</div>
         <Footer />
       </body>
     </html>

@@ -60,3 +60,18 @@ export async function updateListing(id, updatedData) {
 
   return data;
 }
+
+// GET ALL LISTING BY USER ID
+export async function getListingsByUserId(userId) {
+  const { data: listing, error } = await supabase
+    .from('listings')
+    .select('*')
+    .eq('user_id', userId);
+
+  if (error) {
+    console.log('Error fetching listings:', error);
+    throw new Error('Failed to fetch listings');
+  }
+
+  return listing;
+}

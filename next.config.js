@@ -1,6 +1,6 @@
 // next.config.js
 module.exports = {
   images: {
-    domains: ['domos.us'],
+    domains: ['domos.us', 'images.pexels.com'],
   },
 };

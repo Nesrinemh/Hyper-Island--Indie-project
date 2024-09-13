@@ -5,6 +5,7 @@ import { StarIcon } from 'lucide-react';
 import { unstable_noStore as noStore } from 'next/cache';
 import { createClient } from '@/utils/server';
 import { redirect } from 'next/navigation';
+import Image from 'next/image';
 
 export default async function MyListing() {
   noStore();
@@ -33,9 +34,10 @@ export default async function MyListing() {
               className='group'
             >
               <div className='relative w-full h-64 overflow-hidden rounded-lg bg-gray-200'>
-                <img
+                <Image
                   src={listing.cover_image}
                   alt={listing.title}
+                  width={200}
                   className='absolute h-full w-full object-cover object-center group-hover:opacity-75'
                 />
               </div>

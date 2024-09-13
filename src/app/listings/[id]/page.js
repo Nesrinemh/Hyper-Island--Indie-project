@@ -17,6 +17,7 @@ import {
 import { deleteListingById, getListing } from '@/utils/getListings';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -81,9 +82,11 @@ export default function Listing({ params }) {
         <div className='grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2'>
           <div className='space-y-4'>
             <div className='relative w-full h-96 overflow-hidden rounded-lg bg-gray-200'>
-              <img
+              <Image
                 src={allImages[currentImageIndex]}
                 alt={`Image ${currentImageIndex + 1} of listing`}
+                width={200}
+                height={200}
                 className='absolute h-full w-full object-cover object-center'
               />
               <button
@@ -101,10 +104,12 @@ export default function Listing({ params }) {
             </div>
             <div className='flex space-x-2 overflow-x-auto'>
               {allImages.map((image, index) => (
-                <img
+                <Image
                   key={index}
                   src={image}
                   alt={`Thumbnail ${index + 1}`}
+                  width={200}
+                  height={200}
                   className={`h-20 w-20 object-cover rounded-md cursor-pointer ${
                     index === currentImageIndex
                       ? 'ring-2 ring-indigo-500'

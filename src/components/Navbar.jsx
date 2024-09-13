@@ -65,6 +65,8 @@ export default function Navbar({ user }) {
               <Image
                 src={Logo}
                 alt='Living&Co logo'
+                width={200}
+                height={200}
                 className='h-12 md:h-20 w-auto'
               />
             </Link>

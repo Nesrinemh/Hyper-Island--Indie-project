@@ -6,10 +6,12 @@ import {
   BedDouble,
   ChevronLeft,
   ChevronRight,
+  Cigarette,
   MapPin,
   Maximize,
   PawPrint,
   PencilIcon,
+  ShipWheelIcon,
   StarIcon,
   Trash2Icon,
   Users,
@@ -185,13 +187,13 @@ export default function Listing({ params }) {
                 )}
                 {listing.smoking_allowed && (
                   <div className='flex items-center'>
-                    <Smoking className='h-5 w-5 text-gray-400 mr-2' />
+                    <Cigarette className='h-5 w-5 text-gray-400 mr-2' />
                     <span>Smoking allowed</span>
                   </div>
                 )}
                 {listing.wheelchair_accessible && (
                   <div className='flex items-center'>
-                    <Wheelchair className='h-5 w-5 text-gray-400 mr-2' />
+                    <ShipWheelIcon className='h-5 w-5 text-gray-400 mr-2' />
                     <span>Wheelchair accessible</span>
                   </div>
                 )}

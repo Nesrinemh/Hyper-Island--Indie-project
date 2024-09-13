@@ -23,7 +23,7 @@ const Footer = () => {
                   href='/tenant-guide'
                   className='hover:text-gray-300'
                 >
-                  Tenant's Guide
+                  Tenants Guide
                 </a>
               </li>
               <li>

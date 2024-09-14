@@ -7,9 +7,5 @@ export default async function Listing({ params }) {
 
   const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
-    redirect('/login');
-  }
-
-  return <DisplayOneListing params={params} user={data.user} />;
+  return <DisplayOneListing params={params} user={data?.user} />;
 }

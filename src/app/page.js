@@ -41,7 +41,7 @@ export default async function Listings() {
                   {listing.title}
                 </p>
                 <p className='mt-1 text-sm font-medium text-gray-900'>
-                  ${listing.price} / month
+                  {listing.price} SEK / month
                 </p>
                 <div className='mt-1 flex items-center'>
                   <StarIcon className='h-4 w-4 text-yellow-400' />

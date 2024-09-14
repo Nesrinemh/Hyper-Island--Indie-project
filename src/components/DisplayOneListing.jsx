@@ -144,7 +144,7 @@ function DisplayOneListing({ params, user }) {
               </p>
             </div>
             <p className='text-3xl font-bold text-gray-900 mb-6'>
-              ${listing.price}{' '}
+              {listing.price} SEK{' '}
               <span className='text-lg font-normal'>/ month</span>
             </p>
 
@@ -219,7 +219,7 @@ function DisplayOneListing({ params, user }) {
               <p>Phone: {listing.contact_phone}</p>
             </div>
 
-            {user.id === listing.user_id && (
+            {user?.id === listing.user_id && (
               <div className='flex flex-col justify-center m-4 '>
                 <Link
                   className='mb-2'

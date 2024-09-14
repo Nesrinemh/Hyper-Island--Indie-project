@@ -104,7 +104,9 @@ export default function EditListingForm({ params, user }) {
               </label>
               <div className='mt-1 relative rounded-md shadow-sm'>
                 <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-                  <span className='text-gray-500 sm:text-sm'>$</span>
+                  <span className='text-gray-500 sm:text-sm'>
+                    SEK
+                  </span>
                 </div>
                 <input
                   type='number'
@@ -332,7 +334,7 @@ export default function EditListingForm({ params, user }) {
               name='maximum_tenant'
               value={formData.maximum_tenant}
               onChange={handleChange}
-              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm'
             />
           </div>
 

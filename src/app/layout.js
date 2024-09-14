@@ -17,7 +17,29 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <head>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossorigin
+        />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Climate+Crisis&display=swap'
+          rel='stylesheet'
+        />
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossorigin
+        />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Climate+Crisis&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap'
+          rel='stylesheet'
+        />
+      </head>
+      <body className='font-DMMono'>
         <>
           <Navbar user={data.user} />
         </>

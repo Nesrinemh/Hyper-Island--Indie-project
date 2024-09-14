@@ -1,10 +1,10 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { supabase } from '@/utils/supabase';
+import { getListing, updateListing } from '@/utils/getListings';
 
-function CreateListingForm({ user }) {
+export default function EditListingForm({ params, user }) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
@@ -16,71 +16,51 @@ function CreateListingForm({ user }) {
     room_size: '',
     cover_image: '',
     detail_images: [],
-    rental_from: '',
-    rental_duration: '',
-    adress: '',
-    adress_city: '',
-    adress_zip_code: '',
-    maximum_tenant: '',
-    pet_allowed: false,
-    smoking_allowed: false,
-    wheelchair_accessible: false,
+    contact_email: '',
+    contact_phone: '',
+    highlights: [],
+    user_id: '',
   });
 
+  useEffect(() => {
+    async function fetchListing() {
+      const listing = await getListing(params.id);
+      setFormData(listing);
+    }
+    fetchListing();
+  }, [params.id]);
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const dataToSubmit = {
-      ...formData,
-      price: parseInt(formData.price),
-      bedrooms: parseInt(formData.bedrooms),
-      bathrooms: parseInt(formData.bathrooms),
-      room_size: parseInt(formData.room_size),
-      rental_duration: parseInt(formData.rental_duration),
-      adress_zip_code: parseInt(formData.adress_zip_code),
-      maximum_tenant: parseInt(formData.maximum_tenant),
-      user_id: user.id,
-    };
-
-    try {
-      const { data, error } = await supabase
-        .from('listings')
-        .insert([dataToSubmit]);
-
-      if (error) throw error;
-
-      console.log('Data inserted successfully:', data);
-      router.push('/listings');
-    } catch (error) {
-      console.error('Error inserting data:', error.message);
-    }
+    await updateListing(params.id, formData);
+    router.push(`/listings/${params.id}`);
   };
 
   return (
-    <div className='min-h-screen py-20 px-4 sm:px-6 lg:px-8 font-sans'>
+    <div className='min-h-screen  py-12 px-4 sm:px-6 lg:px-8 font-sans'>
       <form
         onSubmit={handleSubmit}
-        className='max-w-3xl mx-auto bg-transparent rounded-xl shadow-2xl overflow-hidden p-6'
+        className='max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden'
       >
-        <div className='px-8 py-6 bg-red rounded-lg bg-black bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30 border border-gray-100 shadow-lg '>
-          <h2 className='text-3xl font-DMMono text-black2'>
-            Add a new rent.
+        <div className='px-8 py-6 '>
+          <h2 className='text-3xl font-extrabold text-black'>
+            Update a New Housing Listing
           </h2>
         </div>
         <div className='px-8 py-6 space-y-6'>
           {/* Title input */}
-          <div className='text-black p-1 font-bold '>
+          <div>
             <label
               htmlFor='title'
-              className='block text-sm font-DMMono text-black p-1 font-bold border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Title
             </label>
@@ -91,7 +71,7 @@ function CreateListingForm({ user }) {
               value={formData.title}
               onChange={handleChange}
               required
-              className='mt-6 block w-full rounded-md border border-gray-700 shadow-sm '
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm   '
             />
           </div>
 
@@ -99,7 +79,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='description'
-              className='block text-sm text-dark p-1 font-bold border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Description
             </label>
@@ -109,7 +89,7 @@ function CreateListingForm({ user }) {
               value={formData.description}
               onChange={handleChange}
               rows='3'
-              className=' block w-full rounded-md mt-6 border border-gray-700 shadow-sm'
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
             ></textarea>
           </div>
 
@@ -118,7 +98,7 @@ function CreateListingForm({ user }) {
             <div>
               <label
                 htmlFor='price'
-                className='block text-sm p-1 font-bold  text-dark border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Price
               </label>
@@ -132,16 +112,15 @@ function CreateListingForm({ user }) {
                   name='price'
                   value={formData.price}
                   onChange={handleChange}
-                  min='0'
                   required
-                  className='pl-7 mt-6 border border-gray-700 block w-full rounded-md  shadow-sm'
+                  className='pl-7 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
                 />
               </div>
             </div>
             <div>
               <label
                 htmlFor='location'
-                className='block text-sm p-1 font-bold  text-dark border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Location
               </label>
@@ -151,7 +130,7 @@ function CreateListingForm({ user }) {
                 name='location'
                 value={formData.location}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
           </div>
@@ -161,7 +140,7 @@ function CreateListingForm({ user }) {
             <div>
               <label
                 htmlFor='bedrooms'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Bedrooms
               </label>
@@ -171,13 +150,13 @@ function CreateListingForm({ user }) {
                 name='bedrooms'
                 value={formData.bedrooms}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
             <div>
               <label
                 htmlFor='bathrooms'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Bathrooms
               </label>
@@ -187,13 +166,13 @@ function CreateListingForm({ user }) {
                 name='bathrooms'
                 value={formData.bathrooms}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
             <div>
               <label
                 htmlFor='room_size'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Room Size (sqft)
               </label>
@@ -203,7 +182,7 @@ function CreateListingForm({ user }) {
                 name='room_size'
                 value={formData.room_size}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
           </div>
@@ -212,7 +191,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='cover_image'
-              className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Cover Image URL
             </label>
@@ -222,7 +201,7 @@ function CreateListingForm({ user }) {
               name='cover_image'
               value={formData.cover_image}
               onChange={handleChange}
-              className='mt-6 border border-gray-700 block w-full rounded-md shadow-sm '
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
             />
           </div>
 
@@ -230,7 +209,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='detail_images'
-              className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Detail Images URLs (comma-separated)
             </label>
@@ -245,7 +224,7 @@ function CreateListingForm({ user }) {
                   detail_images: e.target.value.split(','),
                 })
               }
-              className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
             />
           </div>
 
@@ -254,7 +233,7 @@ function CreateListingForm({ user }) {
             <div>
               <label
                 htmlFor='rental_from'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Available From
               </label>
@@ -264,13 +243,13 @@ function CreateListingForm({ user }) {
                 name='rental_from'
                 value={formData.rental_from}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
             <div>
               <label
                 htmlFor='rental_duration'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 Rental Duration (months)
               </label>
@@ -280,7 +259,7 @@ function CreateListingForm({ user }) {
                 name='rental_duration'
                 value={formData.rental_duration}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
           </div>
@@ -289,7 +268,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='adress'
-              className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Address
             </label>
@@ -299,7 +278,7 @@ function CreateListingForm({ user }) {
               name='adress'
               value={formData.adress}
               onChange={handleChange}
-              className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
             />
           </div>
 
@@ -308,7 +287,7 @@ function CreateListingForm({ user }) {
             <div>
               <label
                 htmlFor='adress_city'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 City
               </label>
@@ -318,13 +297,13 @@ function CreateListingForm({ user }) {
                 name='adress_city'
                 value={formData.adress_city}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
             <div>
               <label
                 htmlFor='adress_zip_code'
-                className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+                className='block text-sm font-medium text-gray-700'
               >
                 ZIP Code
               </label>
@@ -334,7 +313,7 @@ function CreateListingForm({ user }) {
                 name='adress_zip_code'
                 value={formData.adress_zip_code}
                 onChange={handleChange}
-                className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+                className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
               />
             </div>
           </div>
@@ -343,7 +322,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='maximum_tenant'
-              className='block text-sm font-medium text-dark p-2  border-none rounded-md'
+              className='block text-sm font-medium text-gray-700'
             >
               Maximum Tenants
             </label>
@@ -353,7 +332,7 @@ function CreateListingForm({ user }) {
               name='maximum_tenant'
               value={formData.maximum_tenant}
               onChange={handleChange}
-              className='mt-6 border border-gray-700 block w-full rounded-md  shadow-sm '
+              className='mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50'
             />
           </div>
 
@@ -382,7 +361,7 @@ function CreateListingForm({ user }) {
                 name='smoking_allowed'
                 checked={formData.smoking_allowed}
                 onChange={handleChange}
-                className='h-4 w-4 text-purple-600  border-gray-300 rounded'
+                className='h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded'
               />
               <label
                 htmlFor='smoking_allowed'
@@ -410,12 +389,12 @@ function CreateListingForm({ user }) {
           </div>
 
           {/* Submit button */}
-          <div className='flex justify-center '>
+          <div>
             <button
               type='submit'
-              className=' m-10 py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-black bg-[#FDBE8B]'
+              className='w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#8C53FF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-colors duration-200'
             >
-              Create Listing
+              Update Listing
             </button>
           </div>
         </div>
@@ -423,5 +402,3 @@ function CreateListingForm({ user }) {
     </div>
   );
 }
-
-export default CreateListingForm;

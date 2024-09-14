@@ -147,10 +147,10 @@ const Footer = () => {
         <div className='mt-8 pt-8 border-t border-[#F0E4BE]'>
           <p className='text-center text-sm'>
             © {new Date().getFullYear()} Living&Co All rights
-            reserved. Individual Final Project{' '}
+            reserved. Individual Final Project by{' '}
             <a
               href='https://github.com/Nesrinemh'
-              className='text-purple-200'
+              className='text-[#C1FFB3]'
             >
               Nesrine H
             </a>

@@ -13,7 +13,7 @@ export default async function Listings() {
   return (
     <div className='bg-white'>
       <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24'>
-        <h2 className='text-2xl font-bold tracking-tight text-gray-900 mb-6'>
+        <h2 className='text-3xl font-normal tracking-tight text-gray-900 mb-20 font-ClimateCrisis'>
           Explore homes
         </h2>
 
@@ -34,7 +34,7 @@ export default async function Listings() {
                 />
               </div>
               <div className='mt-4'>
-                <h3 className='text-sm font-medium text-gray-700'>
+                <h3 className='text-sm font-medium text-gray-700 '>
                   {listing.location}
                 </h3>
                 <p className='mt-1 text-sm text-gray-500 truncate'>

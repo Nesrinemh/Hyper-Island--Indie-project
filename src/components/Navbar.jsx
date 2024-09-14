@@ -1,7 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import {
+  Menu,
+  MenuButton,
+  MenuItems,
+  Transition,
+} from '@headlessui/react';
 import {
   BellIcon,
   MenuIcon,
@@ -49,7 +54,8 @@ export default function Navbar({ user }) {
   const guestNavigation = [{ name: 'Our Rent', href: '/' }];
 
   const authNavigation = [
-    { name: 'Rent listing', href: '/my-listings' },
+    { name: 'Our Rent', href: '/' },
+    { name: 'My rents', href: '/my-listings' },
     { name: 'Add a new rent', href: '/create-listing' },
     { name: 'Messages', href: '/messages' },
   ];
@@ -61,7 +67,10 @@ export default function Navbar({ user }) {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between h-16 md:h-24'>
           <div className='flex items-center'>
-            <Link href='/' className='flex-shrink-0'>
+            <Link
+              href='https://livingandco.framer.website/#welcome'
+              className='flex-shrink-0'
+            >
               <Image
                 src={Logo}
                 alt='Living&Co logo'
@@ -72,12 +81,12 @@ export default function Navbar({ user }) {
             </Link>
           </div>
 
-          <div className='hidden md:flex items-center space-x-4'>
+          <div className='hidden md:flex items-center space-x-4 font-DMMono'>
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className='text-gray-900 hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-medium'
+                className='text-gray-900 hover:bg-[#C1FFB3] rounded-md px-3 py-2 text-sm font-medium'
               >
                 {item.name}
               </Link>
@@ -86,7 +95,7 @@ export default function Navbar({ user }) {
               <>
                 <Link
                   href='/login'
-                  className='text-gray-900 hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-medium'
+                  className='text-gray-900 hover:bg-[#C1FFB3] rounded-md px-3 py-2 text-sm font-medium'
                 >
                   Login / SignUp
                 </Link>
@@ -99,20 +108,20 @@ export default function Navbar({ user }) {
               <>
                 <button
                   type='button'
-                  className='rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mr-3'
+                  className='rounded-full bg-black p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mr-3'
                 >
                   <span className='sr-only'>View notifications</span>
                   <BellIcon className='h-6 w-6' aria-hidden='true' />
                 </button>
                 <Menu as='div' className='relative ml-3'>
                   <div>
-                    <Menu.Button className='flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
+                    <MenuButton className='flex rounded-full bg-black text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
                       <span className='sr-only'>Open user menu</span>
                       <UserCircleIcon
                         className='h-8 w-8 text-gray-400'
                         aria-hidden='true'
                       />
-                    </Menu.Button>
+                    </MenuButton>
                   </div>
                   <Transition
                     as={React.Fragment}
@@ -123,7 +132,7 @@ export default function Navbar({ user }) {
                     leaveFrom='transform opacity-100 scale-100'
                     leaveTo='transform opacity-0 scale-95'
                   >
-                    <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                    <MenuItems className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                       <Menu.Item>
                         {({ active }) => (
                           <a
@@ -164,7 +173,7 @@ export default function Navbar({ user }) {
                           </a>
                         )}
                       </Menu.Item>
-                    </Menu.Items>
+                    </MenuItems>
                   </Transition>
                 </Menu>
               </>

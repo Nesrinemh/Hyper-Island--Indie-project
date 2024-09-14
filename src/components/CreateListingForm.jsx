@@ -68,19 +68,19 @@ function CreateListingForm({ user }) {
     <div className='min-h-screen py-20 px-4 sm:px-6 lg:px-8 font-sans'>
       <form
         onSubmit={handleSubmit}
-        className='max-w-3xl mx-auto bg-transparent rounded-xl shadow-2xl overflow-hidden p-6'
+        className='max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden p-6'
       >
-        <div className='px-8 py-6 bg-red rounded-lg bg-black bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-30 border border-gray-100 shadow-lg '>
+        <div className='px-8 py-6 rounded-lg bg-[#C1FFB3] bg-clip-padding bg-opacity-80 border border-gray-200 shadow-lg '>
           <h2 className='text-3xl font-DMMono text-black2'>
             Add a new rent.
           </h2>
         </div>
-        <div className='px-8 py-6 space-y-6'>
+        <div className='px-8 py-6 space-y-6 font-DMMono'>
           {/* Title input */}
           <div className='text-black p-1 font-bold '>
             <label
               htmlFor='title'
-              className='block text-sm font-DMMono text-black p-1 font-bold border-none rounded-md'
+              className='block text-sm text-black p-1 font-bold border-none rounded-md'
             >
               Title
             </label>
@@ -99,7 +99,7 @@ function CreateListingForm({ user }) {
           <div>
             <label
               htmlFor='description'
-              className='block text-sm text-dark p-1 font-bold border-none rounded-md'
+              className='block text-sm text-black p-1 font-bold border-none rounded-md'
             >
               Description
             </label>
@@ -124,9 +124,8 @@ function CreateListingForm({ user }) {
               </label>
               <div className='mt-1 relative rounded-md shadow-sm'>
                 <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
-                  <span className='text-gray-500 sm:text-sm'>
-                    SEK
-                  </span>
+                  <span className='text-black sm:text-sm'>SEK</span>
+                  {'   '}
                 </div>
                 <input
                   type='number'
@@ -136,7 +135,7 @@ function CreateListingForm({ user }) {
                   onChange={handleChange}
                   min='0'
                   required
-                  className='pl-7 mt-6 border border-gray-700 block w-full rounded-md  shadow-sm'
+                  className='pl-10 mt-6 border border-gray-700 block w-full rounded-md  shadow-sm'
                 />
               </div>
             </div>
@@ -368,7 +367,7 @@ function CreateListingForm({ user }) {
                 name='pet_allowed'
                 checked={formData.pet_allowed}
                 onChange={handleChange}
-                className='h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded'
+                className='h-4 w-4 border-gray-300 rounded'
               />
               <label
                 htmlFor='pet_allowed'
@@ -384,7 +383,7 @@ function CreateListingForm({ user }) {
                 name='smoking_allowed'
                 checked={formData.smoking_allowed}
                 onChange={handleChange}
-                className='h-4 w-4 text-purple-600  border-gray-300 rounded'
+                className='h-4 w-4 border-gray-300 rounded'
               />
               <label
                 htmlFor='smoking_allowed'
@@ -400,7 +399,7 @@ function CreateListingForm({ user }) {
                 name='wheelchair_accessible'
                 checked={formData.wheelchair_accessible}
                 onChange={handleChange}
-                className='h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded'
+                className='h-4 w-4 border-gray-300 rounded'
               />
               <label
                 htmlFor='wheelchair_accessible'
@@ -415,7 +414,7 @@ function CreateListingForm({ user }) {
           <div className='flex justify-center '>
             <button
               type='submit'
-              className=' m-10 py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-black bg-[#FDBE8B]'
+              className=' m-10 py-3 px-4 border border-transparent rounded-md shadow-sm text-2xl font-extrabold text-black bg-[#F0E3BE]'
             >
               Create Listing
             </button>

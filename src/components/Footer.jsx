@@ -9,9 +9,9 @@ const Footer = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* For Tenants */}
           <div>
-            <h3 className='text-lg font-semibold mb-4'>
+            <h1 className='text-lg font-semibold mb-4'>
               For Tenants
-            </h3>
+            </h1>
             <ul className='space-y-2'>
               <li>
                 <a href='/search' className='hover:text-gray-300'>

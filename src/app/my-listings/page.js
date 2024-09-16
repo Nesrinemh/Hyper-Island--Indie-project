@@ -38,6 +38,7 @@ export default async function MyListing() {
                   src={listing.cover_image}
                   alt={listing.title}
                   width={200}
+                  height={200}
                   className='absolute h-full w-full object-cover object-center group-hover:opacity-75'
                 />
               </div>

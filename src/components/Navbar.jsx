@@ -57,7 +57,7 @@ export default function Navbar({ user }) {
     { name: 'Our Rent', href: '/' },
     { name: 'My rents', href: '/my-listings' },
     { name: 'Add a new rent', href: '/create-listing' },
-    { name: 'Messages', href: '/messages' },
+    // { name: 'Messages', href: '/messages' },
   ];
 
   const navigation = isLoggedIn ? authNavigation : guestNavigation;

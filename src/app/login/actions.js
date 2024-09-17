@@ -8,8 +8,6 @@ import { createClient } from '@/utils/server';
 export async function login(formData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get('email'),
     password: formData.get('password'),
@@ -28,8 +26,6 @@ export async function login(formData) {
 export async function signup(formData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get('email'),
     password: formData.get('password'),

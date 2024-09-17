@@ -13,14 +13,14 @@ export default async function Listings() {
   return (
     <>
       <Head>
-        <title>Explore Homes | Your Company Name</title>
+        <title>Explore Homes | Living&Co</title>
         <meta
           name='description'
           content='Discover a wide range of homes available for rent. Find your perfect living space with detailed listings and high-quality images.'
         />
         <meta
           name='keywords'
-          content='home rentals, apartments, houses for rent, accommodation'
+          content='home rentals, apartments, houses for rent, accommodation, co-living'
         />
         <link
           rel='canonical'

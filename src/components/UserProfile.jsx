@@ -44,7 +44,7 @@ export default function Profile() {
   return (
     <>
       <Head>
-        <title>User Profile | Your App Name</title>
+        <title>User Profile | Living&Co</title>
         <meta
           name='description'
           content='Update your user profile and information'
@@ -79,7 +79,7 @@ export default function Profile() {
               <button
                 type='button'
                 onClick={() => fileInputRef.current.click()}
-                className='px-4 py-2 bg-[#F0E3BE] text-black rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                className='px-4 py-2 bg-[#F0E3BE] text-black rounded-md hover:bg-[#C1FFB3]focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
               >
                 Upload Photo
               </button>
@@ -106,7 +106,7 @@ export default function Profile() {
                 name='firstName'
                 value={user.firstName}
                 onChange={handleInputChange}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
                 required
               />
             </div>
@@ -123,7 +123,7 @@ export default function Profile() {
                 name='lastName'
                 value={user.lastName}
                 onChange={handleInputChange}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
                 required
               />
             </div>
@@ -141,7 +141,7 @@ export default function Profile() {
               name='email'
               value={user.email}
               onChange={handleInputChange}
-              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
               required
             />
           </div>
@@ -158,13 +158,13 @@ export default function Profile() {
               name='phone'
               value={user.phone}
               onChange={handleInputChange}
-              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
               required
             />
           </div>
           <button
             type='submit'
-            className='w-full px-4 py-2 bg-[#F0E3BE] text-black rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='w-full px-4 py-2 bg-[#F0E3BE] text-black rounded-md hover:bg-[#C1FFB3] focus:outline-none focus:ring-2 focus:ring-[#C1FFB3]'
           >
             Save Profile
           </button>

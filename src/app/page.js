@@ -50,6 +50,7 @@ function ListingCard({ listing }) {
       <article className='flex flex-col h-full'>
         <div className='relative w-full h-64 overflow-hidden rounded-lg bg-gray-200'>
           <Image
+            loading='lazy'
             src={listing.cover_image}
             alt={listing.title}
             width={400}
@@ -58,10 +59,10 @@ function ListingCard({ listing }) {
           />
         </div>
         <div className='mt-4 flex-grow'>
-          <h2 className='text-sm font-medium text-gray-700'>
+          <h2 className='text-sm font-medium text-gray-700 capitalize'>
             {listing.location}
           </h2>
-          <p className='mt-1 text-sm text-gray-500 line-clamp-2'>
+          <p className='mt-1 text-sm text-gray-500 line-clamp-2 uppercase'>
             {listing.title}
           </p>
           <p className='mt-1 text-sm font-medium text-gray-900'>

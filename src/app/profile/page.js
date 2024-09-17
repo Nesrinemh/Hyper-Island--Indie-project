@@ -14,7 +14,6 @@ export default async function Profile() {
   if (error || !data?.user) {
     redirect('/login');
   }
-  const listings = await getListingsByUserId(data.user.id);
 
   return <UserProfile />;
 }

@@ -62,7 +62,7 @@ function ListingCard({ listing }) {
           <h2 className='text-sm font-medium text-gray-700 capitalize'>
             {listing.location}
           </h2>
-          <p className='mt-1 text-sm text-gray-500 line-clamp-2 uppercase'>
+          <p className='mt-1 text-sm text-gray-500 line-clamp-2 '>
             {listing.title}
           </p>
           <p className='mt-1 text-sm font-medium text-gray-900'>
